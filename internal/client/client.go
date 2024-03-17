@@ -65,7 +65,6 @@ import (
 	"google.golang.org/grpc/backoff"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/encoding/gzip"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/metadata"
@@ -138,7 +137,7 @@ func newConnArray(maxSize uint, addr string, security config.Security, idleNotif
 func (a *connArray) Init(addr string, security config.Security, idleNotify *uint32, enableBatch bool) error {
 	a.target = addr
 
-	opt := grpc.WithTransportCredentials(insecure.NewCredentials())
+	opt := grpc.WithTransportCredentials()
 	if len(security.ClusterSSLCA) != 0 {
 		tlsConfig, err := security.ToTLSConfig()
 		if err != nil {
